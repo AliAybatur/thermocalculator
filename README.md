@@ -99,7 +99,6 @@ This project is open source and available for educational purposes.
 ## 📧 Contact
 
 - **GitHub:** [@AliAybatur](https://github.com/AliAybatur)
-- **Website:** [thermocalculator.com](https://thermocalculator.com)
 
 ---
 
