@@ -6271,6 +6271,33 @@
             );
         };
 
+        // Chapter Introduction Component
+        const ChapterIntro = ({ description, tools }) => {
+            const [expanded, setExpanded] = useState(true);
+            
+            return (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+                    <div className="flex justify-between items-center cursor-pointer" onClick={() => setExpanded(!expanded)}>
+                        <h3 className="text-lg font-semibold text-blue-800">📖 About This Chapter</h3>
+                        <span className="text-blue-600 text-xl">{expanded ? '▲' : '▼'}</span>
+                    </div>
+                    {expanded && (
+                        <div className="mt-4 text-gray-700">
+                            <p className="mb-4 leading-relaxed">{description}</p>
+                            <div className="space-y-2">
+                                {tools.map((tool, i) => (
+                                    <div key={i} className="flex items-start gap-2">
+                                        <span className="text-blue-500 mt-1">•</span>
+                                        <div><strong className="text-gray-800">{tool.name}</strong> — {tool.desc}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         // Main App
         const chapters = [
             { id: 1, title: 'Basic Concepts', icon: '📐', sub: 'Units, pressure, temperature' },
@@ -6344,6 +6371,15 @@
                             <div className="max-w-4xl mx-auto space-y-6">
                                 {ch === 1 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">📐 Chapter 1: Basic Concepts</h2>
+                                    <ChapterIntro 
+                                        description="Thermodynamics is the study of energy, heat, and work. This chapter introduces the fundamental concepts and unit conversions essential for all thermodynamic calculations. Understanding these basics is crucial before moving on to more complex topics."
+                                        tools={[
+                                            { name: "Temperature Converter", desc: "Convert between Celsius, Kelvin, Fahrenheit, and Rankine scales" },
+                                            { name: "Pressure Converter", desc: "Convert between Pa, kPa, MPa, bar, atm, psi, and mmHg" },
+                                            { name: "Energy Converter", desc: "Convert between Joules, kJ, calories, BTU, and kWh" },
+                                            { name: "Hydrostatic Pressure", desc: "Calculate pressure at depth using P = ρgh" }
+                                        ]}
+                                    />
                                     <TemperatureConverter />
                                     <PressureConverter />
                                     <EnergyConverter />
@@ -6351,12 +6387,30 @@
                                 </>}
                                 {ch === 2 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">⚡ Chapter 2: Energy Analysis</h2>
+                                    <ChapterIntro 
+                                        description="Energy analysis forms the foundation of thermodynamics. This chapter covers different forms of work, heat transfer modes, and the ideal gas equation. These concepts are essential for analyzing any thermodynamic system."
+                                        tools={[
+                                            { name: "Boundary Work", desc: "Calculate work done during expansion/compression (isobaric, isothermal, polytropic)" },
+                                            { name: "Ideal Gas Law", desc: "Solve PV = nRT for any unknown variable" },
+                                            { name: "Heat Transfer", desc: "Calculate sensible heat using Q = mcΔT" }
+                                        ]}
+                                    />
                                     <BoundaryWork />
                                     <IdealGas />
                                     <HeatTransfer />
                                 </>}
                                 {ch === 3 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">💧 Chapter 3: Pure Substances</h2>
+                                    <ChapterIntro 
+                                        description="Pure substances can exist in different phases (solid, liquid, gas) depending on temperature and pressure. This chapter covers phase diagrams, quality calculations, and how to determine thermodynamic properties in two-phase regions."
+                                        tools={[
+                                            { name: "Phase Determination", desc: "Determine if substance is compressed liquid, saturated, or superheated" },
+                                            { name: "Quality Calculator", desc: "Calculate vapor quality (x) in two-phase mixtures" },
+                                            { name: "Mixture Property", desc: "Find properties using quality: v = vf + x·vfg" },
+                                            { name: "Internal Energy", desc: "Calculate internal energy from enthalpy" },
+                                            { name: "Interpolation", desc: "Interpolate between table values" }
+                                        ]}
+                                    />
                                     <PhaseDetermination />
                                     <QualityCalculator />
                                     <MixtureProperty />
@@ -6365,6 +6419,15 @@
                                 </>}
                                 {ch === 4 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">📦 Chapter 4: Closed Systems</h2>
+                                    <ChapterIntro 
+                                        description="Closed systems exchange energy but not mass with their surroundings. This chapter applies the First Law of Thermodynamics to analyze energy changes in closed systems, including various thermodynamic processes."
+                                        tools={[
+                                            { name: "First Law (Closed)", desc: "Apply Q - W = ΔU for closed systems" },
+                                            { name: "Specific Heat Energy", desc: "Calculate energy using specific heats (cv, cp)" },
+                                            { name: "Polytropic Work", desc: "Calculate work for polytropic processes (PVⁿ = const)" },
+                                            { name: "Isentropic Process", desc: "Analyze ideal adiabatic reversible processes" }
+                                        ]}
+                                    />
                                     <FirstLawClosed />
                                     <SpecificHeatEnergy />
                                     <PolytropicWorkClosed />
@@ -6372,6 +6435,17 @@
                                 </>}
                                 {ch === 5 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🔄 Chapter 5: Open Systems</h2>
+                                    <ChapterIntro 
+                                        description="Open systems (control volumes) exchange both mass and energy with their surroundings. This chapter covers steady-flow devices like turbines, compressors, nozzles, and heat exchangers using the Steady Flow Energy Equation."
+                                        tools={[
+                                            { name: "Steady Flow Energy", desc: "Apply SFEE: q - w = Δh + ΔKE + ΔPE" },
+                                            { name: "Turbine Calculator", desc: "Calculate turbine work output and efficiency" },
+                                            { name: "Compressor Calculator", desc: "Calculate compressor work input" },
+                                            { name: "Nozzle/Diffuser", desc: "Calculate velocity and pressure changes" },
+                                            { name: "Heat Exchanger", desc: "Analyze heat transfer between fluid streams" },
+                                            { name: "Throttling Valve", desc: "Analyze isenthalpic expansion (h₁ = h₂)" }
+                                        ]}
+                                    />
                                     <SteadyFlowEnergy />
                                     <TurbineCalc />
                                     <CompressorCalc />
@@ -6381,6 +6455,16 @@
                                 </>}
                                 {ch === 6 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🔒 Chapter 6: Second Law</h2>
+                                    <ChapterIntro 
+                                        description="The Second Law of Thermodynamics establishes the direction of natural processes and sets limits on the efficiency of heat engines and refrigerators. This chapter covers Carnot cycles, COP, and the concept of reversibility."
+                                        tools={[
+                                            { name: "Heat Engine", desc: "Calculate thermal efficiency: η = W_net/Q_H" },
+                                            { name: "Carnot Efficiency", desc: "Maximum possible efficiency: η_max = 1 - T_L/T_H" },
+                                            { name: "Refrigerator", desc: "Calculate COP for cooling: COP_R = Q_L/W_net" },
+                                            { name: "Heat Pump", desc: "Calculate COP for heating: COP_HP = Q_H/W_net" },
+                                            { name: "Second Law Efficiency", desc: "Compare actual to reversible performance" }
+                                        ]}
+                                    />
                                     <HeatEngine />
                                     <CarnotEfficiency />
                                     <Refrigerator />
@@ -6389,6 +6473,16 @@
                                 </>}
                                 {ch === 7 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">📊 Chapter 7: Entropy</h2>
+                                    <ChapterIntro 
+                                        description="Entropy is a measure of molecular disorder and is key to understanding irreversibilities in thermodynamic processes. This chapter covers entropy calculations, isentropic processes, and efficiency of real devices."
+                                        tools={[
+                                            { name: "Entropy (Ideal Gas)", desc: "Calculate Δs using cp, cv, and gas relations" },
+                                            { name: "Entropy (Incompressible)", desc: "Calculate Δs = c·ln(T₂/T₁) for liquids/solids" },
+                                            { name: "Isentropic Efficiency (Turbine)", desc: "η_t = (h₁-h₂)/(h₁-h₂s)" },
+                                            { name: "Isentropic Efficiency (Compressor)", desc: "η_c = (h₂s-h₁)/(h₂-h₁)" },
+                                            { name: "Entropy Generation", desc: "Calculate S_gen for irreversible processes" }
+                                        ]}
+                                    />
                                     <EntropyIdealGas />
                                     <EntropyIncompressible />
                                     <IsentropicEfficiencyTurbine />
@@ -6397,6 +6491,17 @@
                                 </>}
                                 {ch === 8 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🎯 Chapter 8: Exergy</h2>
+                                    <ChapterIntro 
+                                        description="Exergy (availability) represents the maximum useful work potential of a system relative to its environment. This chapter analyzes how much of this work potential is destroyed due to irreversibilities."
+                                        tools={[
+                                            { name: "Dead State", desc: "Define reference environment conditions (T₀, P₀)" },
+                                            { name: "Flow Exergy", desc: "Calculate exergy of a flowing stream" },
+                                            { name: "Closed System Exergy", desc: "Calculate exergy of a non-flow system" },
+                                            { name: "Heat Transfer Exergy", desc: "Exergy associated with heat transfer" },
+                                            { name: "Exergy Destruction", desc: "Calculate irreversibility: X_dest = T₀·S_gen" },
+                                            { name: "Exergy Efficiency", desc: "Second-law efficiency analysis" }
+                                        ]}
+                                    />
                                     <DeadState />
                                     <FlowExergy />
                                     <ClosedSystemExergy />
@@ -6406,6 +6511,15 @@
                                 </>}
                                 {ch === 9 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🔥 Chapter 9: Gas Power Cycles</h2>
+                                    <ChapterIntro 
+                                        description="Gas power cycles are the basis of internal combustion engines and gas turbines. This chapter analyzes ideal Otto, Diesel, and Brayton cycles to understand the theoretical limits of engine performance."
+                                        tools={[
+                                            { name: "Otto Cycle", desc: "Analyze spark-ignition engine cycle (gasoline engines)" },
+                                            { name: "Diesel Cycle", desc: "Analyze compression-ignition engine cycle" },
+                                            { name: "Brayton Cycle", desc: "Analyze gas turbine/jet engine cycle" },
+                                            { name: "Mean Effective Pressure", desc: "Calculate MEP for engine comparison" }
+                                        ]}
+                                    />
                                     <OttoCycle />
                                     <DieselCycle />
                                     <BraytonCycle />
@@ -6413,6 +6527,16 @@
                                 </>}
                                 {ch === 10 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">♨️ Chapter 10: Vapor Power Cycles</h2>
+                                    <ChapterIntro 
+                                        description="Vapor power cycles are used in most electricity generation plants worldwide. This chapter analyzes the Rankine cycle and its modifications (reheat, regeneration) that improve power plant efficiency."
+                                        tools={[
+                                            { name: "Rankine Cycle", desc: "Analyze basic steam power plant cycle" },
+                                            { name: "Pump Work", desc: "Calculate pump work for incompressible liquid" },
+                                            { name: "Rankine with Reheat", desc: "Analyze cycle with steam reheating" },
+                                            { name: "Feedwater Heater", desc: "Analyze regenerative heating" },
+                                            { name: "Turbine Exit Quality", desc: "Check moisture content at turbine exit" }
+                                        ]}
+                                    />
                                     <RankineCycle />
                                     <PumpWork />
                                     <RankineReheat />
@@ -6421,6 +6545,16 @@
                                 </>}
                                 {ch === 11 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">❄️ Chapter 11: Refrigeration Cycles</h2>
+                                    <ChapterIntro 
+                                        description="Refrigeration cycles transfer heat from a low-temperature region to a high-temperature region using work input. This chapter covers vapor-compression, gas refrigeration, and absorption systems used in cooling and air conditioning."
+                                        tools={[
+                                            { name: "Vapor Compression", desc: "Analyze standard refrigeration cycle with phase change" },
+                                            { name: "Refrigeration Efficiency", desc: "Calculate COP and capacity" },
+                                            { name: "Cascade Refrigeration", desc: "Analyze multi-stage systems for very low temperatures" },
+                                            { name: "Gas Refrigeration", desc: "Analyze reversed Brayton cycle" },
+                                            { name: "Absorption Refrigeration", desc: "Heat-driven cooling systems" }
+                                        ]}
+                                    />
                                     <VaporCompression />
                                     <RefrigerationEfficiency />
                                     <CascadeRefrigeration />
@@ -6429,6 +6563,17 @@
                                 </>}
                                 {ch === 12 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🔗 Chapter 12: Thermodynamic Relations</h2>
+                                    <ChapterIntro 
+                                        description="Thermodynamic relations connect different properties through mathematical relationships. This chapter covers Maxwell relations, the Clapeyron equation, and methods for calculating properties of real gases."
+                                        tools={[
+                                            { name: "Maxwell Relations", desc: "Derive property relationships from thermodynamic potentials" },
+                                            { name: "Clapeyron Equation", desc: "Relate pressure and temperature during phase change" },
+                                            { name: "Clausius-Clapeyron", desc: "Simplified equation for vapor pressure" },
+                                            { name: "Joule-Thomson", desc: "Calculate temperature change during throttling" },
+                                            { name: "Compressibility Factor", desc: "Account for real gas behavior: Pv = ZRT" },
+                                            { name: "Reduced Properties", desc: "Use generalized charts with Pr and Tr" }
+                                        ]}
+                                    />
                                     <MaxwellRelations />
                                     <ClapeyronEquation />
                                     <ClausiusClapeyron />
@@ -6438,6 +6583,17 @@
                                 </>}
                                 {ch === 13 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🌫️ Chapter 13: Gas Mixtures</h2>
+                                    <ChapterIntro 
+                                        description="Most engineering applications involve mixtures of gases rather than pure substances. This chapter covers how to calculate properties of gas mixtures using Dalton's and Amagat's laws."
+                                        tools={[
+                                            { name: "Mass & Mole Fractions", desc: "Convert between mass and molar compositions" },
+                                            { name: "Dalton's Law", desc: "Calculate partial pressures: P_i = y_i × P_total" },
+                                            { name: "Amagat's Law", desc: "Calculate partial volumes" },
+                                            { name: "Mixture Specific Heats", desc: "Calculate cp and cv for gas mixtures" },
+                                            { name: "Gas Mixture PVT", desc: "Apply ideal gas law to mixtures" },
+                                            { name: "Gas Properties Reference", desc: "Common gas properties table" }
+                                        ]}
+                                    />
                                     <MassMoleFractions />
                                     <DaltonLaw />
                                     <AmagatLaw />
@@ -6447,6 +6603,17 @@
                                 </>}
                                 {ch === 14 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">💨 Chapter 14: Psychrometrics</h2>
+                                    <ChapterIntro 
+                                        description="Psychrometrics is the study of air-water vapor mixtures, essential for HVAC and air conditioning design. This chapter covers humidity calculations, dew point, and common air conditioning processes."
+                                        tools={[
+                                            { name: "Humidity Ratio", desc: "Calculate ω = 0.622 × Pv/(P - Pv)" },
+                                            { name: "Relative Humidity", desc: "Calculate φ = Pv/Psat" },
+                                            { name: "Dew Point", desc: "Find temperature at which condensation begins" },
+                                            { name: "Moist Air Enthalpy", desc: "Calculate h = cp×T + ω×hg" },
+                                            { name: "AC Processes", desc: "Analyze heating, cooling, humidification, mixing" },
+                                            { name: "Saturation Pressure Table", desc: "Water vapor saturation properties" }
+                                        ]}
+                                    />
                                     <HumidityRatio />
                                     <RelativeHumidity />
                                     <DewPoint />
@@ -6456,6 +6623,17 @@
                                 </>}
                                 {ch === 15 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">🔥 Chapter 15: Combustion</h2>
+                                    <ChapterIntro 
+                                        description="Combustion is the chemical reaction between a fuel and oxidizer that releases energy. This chapter covers stoichiometry, air-fuel ratios, and energy analysis of combustion processes."
+                                        tools={[
+                                            { name: "Air-Fuel Ratio", desc: "Calculate mass and molar AF ratios" },
+                                            { name: "Theoretical Air", desc: "Minimum air required for complete combustion" },
+                                            { name: "Excess Air", desc: "Calculate percent excess/deficient air" },
+                                            { name: "Enthalpy of Combustion", desc: "Energy released during combustion (HHV, LHV)" },
+                                            { name: "Adiabatic Flame Temp", desc: "Maximum temperature with no heat loss" },
+                                            { name: "Formation Enthalpy Reference", desc: "Standard enthalpies of formation" }
+                                        ]}
+                                    />
                                     <AirFuelRatio />
                                     <TheoreticalAir />
                                     <ExcessAir />
@@ -6465,6 +6643,17 @@
                                 </>}
                                 {ch === 16 && <>
                                     <h2 className="text-2xl font-bold text-gray-800">⚖️ Chapter 16: Chemical Equilibrium</h2>
+                                    <ChapterIntro 
+                                        description="Chemical equilibrium determines the final composition of reacting mixtures. This chapter covers Gibbs free energy, equilibrium constants, and how temperature and pressure affect equilibrium."
+                                        tools={[
+                                            { name: "Gibbs Free Energy", desc: "Calculate ΔG = ΔH - TΔS for reaction spontaneity" },
+                                            { name: "Equilibrium Constant Kp", desc: "Calculate Kp from Gibbs energy" },
+                                            { name: "Van't Hoff Equation", desc: "Temperature dependence of equilibrium constant" },
+                                            { name: "Kp from Pressures", desc: "Calculate Kp from partial pressures" },
+                                            { name: "Gibbs Formation Reference", desc: "Standard Gibbs energies of formation" },
+                                            { name: "Equilibrium Principles", desc: "Le Chatelier's principle and shifting equilibrium" }
+                                        ]}
+                                    />
                                     <GibbsFreeEnergy />
                                     <EquilibriumConstantKp />
                                     <VantHoffEquation />
